@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MvcAuctionWebApp.Models;
 
 namespace MvcAuctionWebApp.Controllers
 {
@@ -11,7 +12,40 @@ namespace MvcAuctionWebApp.Controllers
         // GET: Auctions
         public ActionResult Index()
         {
-            return View();
+            var auctions = new List<Auction>()
+            {
+                new Models.Auction
+                {
+                    Title = "Example Auction #1",
+                    Description = "This is an example Auction",
+                    StartTime = DateTime.Now,
+                    EndTime = DateTime.Now.AddDays(7),
+                    StartPrice = 1.0M,
+                    CurrentPrice = null
+                },
+
+                new Models.Auction
+                {
+                    Title = "Example Auction #2",
+                    Description = "This is a second example Auction",
+                    StartTime = DateTime.Now,
+                    EndTime = DateTime.Now.AddDays(7),
+                    StartPrice = 1.0M,
+                    CurrentPrice = 30M
+                },
+
+                new Models.Auction
+                {
+                    Title = "Example Auction #3",
+                    Description = "This is a third example Auction",
+                    StartTime = DateTime.Now,
+                    EndTime = DateTime.Now.AddDays(7),
+                    StartPrice = 10.0M,
+                    CurrentPrice = 24M
+                }
+            };
+
+            return View(auctions);
         }
 
         public ActionResult TempDataDemo()
