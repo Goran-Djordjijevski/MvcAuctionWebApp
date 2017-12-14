@@ -13,5 +13,27 @@ namespace MvcAuctionWebApp.Controllers
         {
             return View();
         }
+
+        public ActionResult TempDataDemo()
+        {
+            TempData["SuccessMessage"] = "The action succeeded!";
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Auction()
+        {
+            var auction = new MvcAuctionWebApp.Models.Auction()
+            {
+                Title = "Example Auction",
+                Description = "This is an example Auction",
+                StartTime = DateTime.Now,
+                EndTime = DateTime.Now.AddDays(7),
+                StartPrice = 1.00M,
+                CurrentPrice = null
+            };
+
+            return View(auction);
+        }
     }
 }
