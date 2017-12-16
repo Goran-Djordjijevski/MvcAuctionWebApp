@@ -12,38 +12,8 @@ namespace MvcAuctionWebApp.Controllers
         // GET: Auctions
         public ActionResult Index()
         {
-            var auctions = new List<Auction>()
-            {
-                new Models.Auction
-                {
-                    Title = "Example Auction #1",
-                    Description = "This is an example Auction",
-                    StartTime = DateTime.Now,
-                    EndTime = DateTime.Now.AddDays(7),
-                    StartPrice = 1.0M,
-                    CurrentPrice = null
-                },
-
-                new Models.Auction
-                {
-                    Title = "Example Auction #2",
-                    Description = "This is a second example Auction",
-                    StartTime = DateTime.Now,
-                    EndTime = DateTime.Now.AddDays(7),
-                    StartPrice = 1.0M,
-                    CurrentPrice = 30M
-                },
-
-                new Models.Auction
-                {
-                    Title = "Example Auction #3",
-                    Description = "This is a third example Auction",
-                    StartTime = DateTime.Now,
-                    EndTime = DateTime.Now.AddDays(7),
-                    StartPrice = 10.0M,
-                    CurrentPrice = 24M
-                }
-            };
+            var db = new AuctionsDataContext();
+            var auctions = db.Auctions.ToList();
 
             return View(auctions);
         }
@@ -57,15 +27,8 @@ namespace MvcAuctionWebApp.Controllers
 
         public ActionResult Auction(long id)
         {
-            var auction = new MvcAuctionWebApp.Models.Auction()
-            {
-                Title = "Example Auction",
-                Description = "This is an example Auction",
-                StartTime = DateTime.Now,
-                EndTime = DateTime.Now.AddDays(7),
-                StartPrice = 1.00M,
-                CurrentPrice = null
-            };
+            var db = new AuctionsDataContext();
+            var auction = db.Auctions.Find(id);
 
             return View(auction);
         }
@@ -85,6 +48,9 @@ namespace MvcAuctionWebApp.Controllers
             if (ModelState.IsValid)
             {
                 // Save to the database
+                var db = new AuctionsDataContext();
+                db.Auctions.Add(auction);
+                db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
