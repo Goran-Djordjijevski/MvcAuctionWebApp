@@ -70,12 +70,26 @@ namespace MvcAuctionWebApp.Controllers
             return View(auction);
         }
 
-        public ActionResult Create([Bind(Exclude = "CurrentPrice")]Models.Auction auction)
+        [HttpGet]
+        public ActionResult Create()
         {
             var categoryList = new SelectList(new[] { "Automotive", "Electronics", "Games", "Home" });
 
             ViewBag.CategoryList = categoryList;
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create([Bind(Exclude = "CurrentPrice")]Models.Auction auction)
+        {
+            if (ModelState.IsValid)
+            {
+                // Save to the database
+
+                return RedirectToAction("Index");
+            }
+
+            return Create();
         }
     }
 }
